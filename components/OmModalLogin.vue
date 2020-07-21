@@ -21,6 +21,7 @@
             prepend-icon="mdi-lock"
             :rules="passwordRules"
           )
+        v-alert(v-if="error" text dismissible dense type="error") Las credenciales no son validas
       v-card-actions
         v-spacer
         v-btn(
@@ -28,10 +29,11 @@
           class="mr-4"
           color="primary"
           :loading="loading"
-          @click="$store.dispatch('get_token', { username, password })"
+          @click="login"
         ) Iniciar Sesión
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   model: {
     prop: 'dialog',
@@ -49,6 +51,23 @@ export default {
     passwordRules: [],
     loading: false,
     valid: false,
+    error: false,
   }),
+  computed: {
+    ...mapGetters(['isAuth']),
+  },
+  methods: {
+    async login() {
+      await this.$store.dispatch('get_token', {
+        username: this.username,
+        password: this.password,
+      })
+      if (this.isAuth) {
+        this.$emit('change', false)
+      } else {
+        this.error = true
+      }
+    },
+  },
 }
 </script>

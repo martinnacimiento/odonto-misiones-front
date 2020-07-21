@@ -2,9 +2,18 @@ import jwtDecode from 'jwt-decode'
 
 export const state = {
   auth: null,
-  books: [],
   is_dark_mode: false,
 }
+
+export const getters = {
+  isAuth: (state) => {
+    return !!state.auth
+  },
+  can: (state) => (permission) => {
+    return state.auth?.permissions.find((p) => p === permission)
+  },
+}
+
 export const mutations = {
   setIsAuth(state, auth) {
     state.auth = auth
@@ -20,15 +29,18 @@ export const mutations = {
 
 export const actions = {
   async get_token({ commit }, credentials) {
-    const { token } = await this.$axios.$post('/api-token-auth/', credentials)
-    this.$axios.setToken(token, 'JWT')
-    const auth = jwtDecode(token)
-    const books = await this.$axios.$get('/apps/books/')
-    commit('setBooks', books)
-    commit('setIsAuth', auth)
+    try {
+      const { token } = await this.$axios.$post('/api-token-auth/', credentials)
+      this.$axios.setToken(token, 'JWT')
+      const auth = jwtDecode(token)
+      commit('setIsAuth', auth)
+    } catch (error) {
+      commit('setIsAuth', null)
+    }
   },
 
-  delete_token() {
+  delete_token({ commit }) {
     this.$axios.setToken(false)
+    commit('setIsAuth', null)
   },
 }

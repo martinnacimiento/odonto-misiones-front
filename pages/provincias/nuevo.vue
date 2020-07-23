@@ -12,16 +12,16 @@
                 v-model="province.province"
                 :rules="[rules.required, rules.counter]"
               )
-              v-col(cols="12" md="6")
-              v-select(
-                  label="Pais"
-                  :items="country"
-                  item-text="pais"
-                  item-value="id"
-                  v-model="province.pais_id"
-                  :rules="[rules.required]" 
-                  :loading="$fetchState.pending"
-              )
+            v-col(cols="12" md="6")
+                v-select(
+                    label="País"
+                    :items="countries"
+                    item-text="pais"
+                    item-value="id"
+                    v-model="province.country"
+                    :rules="[rules.required]" 
+                    :loading="$fetchState.pending"
+                )
       v-card-actions
         v-spacer
         v-btn(outlined @click="$router.go(-1)") Volver
@@ -32,10 +32,10 @@ export default {
   name: 'provincias-nuevo',
   async fetch() {
     const country = await this.$axios.$get(`apps/pais/`)
-    this.country = country
+    this.countries = country
   },
   data: () => ({
-    country: [],
+    countries: [],
     valid: false,
     snackbar: false,
     color: 'green',
@@ -53,10 +53,10 @@ export default {
         this.loading = true
         try {
           await this.$axios.$post(`apps/provincia/`, {
-            provincia: this.province.provincia,
-            pais_id: this.province.pais_id,
+            provincia: this.province.province,
+            pais: this.province.country,
           })
-          this.snack('provincia creada!')
+          this.snack('Provincia creada!')
           this.$refs.form.reset()
         } catch (error) {
           this.snack(error.response.data.detail, 'error')

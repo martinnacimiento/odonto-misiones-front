@@ -23,7 +23,7 @@
       )
         template( v-slot:top)
           v-toolbar(flat)
-            v-toolbar-title barrios
+            v-toolbar-title Barrios
             v-divider(inset vertical).mx-4
             v-text-field(v-model="search" append-icon="mdi-table-search" label="Buscar" single-line hide-details)
             v-spacer
@@ -43,7 +43,7 @@ export default {
     district: [],
     headers: [
       { text: 'ID', value: 'id' },
-      { text: 'barrio', value: 'barrio' },
+      { text: 'Barrio', value: 'barrio' },
       {
         text: 'Acciones',
         align: 'right',

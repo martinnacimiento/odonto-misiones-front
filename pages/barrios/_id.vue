@@ -9,15 +9,25 @@
             v-col(cols="12" md="6")
               v-text-field(
                 label="Id"
-                v-model="province.id"
+                v-model="district.id"
                 disabled
               )
             v-col(cols="12" md="6")
               v-text-field(
-                label="Sexo"
-                v-model="province.barrio"
+                label="Barrio"
+                v-model="district.barrio"
                 :rules="[rules.required, rules.counter]"
                 autofocus
+              )
+            v-col(cols="12" md="6")
+              v-select(
+                  label="Localidad"
+                  :items="cities"
+                  item-text="localidad"
+                  item-value="id"
+                  v-model="district.localidad"
+                  :rules="[rules.required]" 
+                  :loading="$fetchState.pending"
               )
       v-card-actions
         v-spacer
@@ -29,11 +39,14 @@ export default {
   name: 'barrios-id',
   async fetch() {
     const { id } = this.$route.params
-    const province = await this.$axios.$get(`apps/barrios/${id}/`)
-    this.province = province
+    const district = await this.$axios.$get(`apps/barrio/${id}/`)
+    const cities = await this.$axios.$get(`apps/localidad/`)
+    this.district = district
+    this.cities = cities
   },
   data: () => ({
-    province: {},
+    district: {},
+    cities: [],
     valid: false,
     snackbar: false,
     color: 'green',
@@ -49,10 +62,11 @@ export default {
       if (this.$refs.form.validate()) {
         this.loading = true
         try {
-          await this.$axios.$put(`apps/barrio/${this.province.id}/`, {
-            barrio: this.province.barrio,
+          await this.$axios.$put(`apps/barrio/${this.district.id}/`, {
+            barrio: this.district.barrio,
+            localidad: this.district.localidad,
           })
-          this.snack('barrio actualizada!')
+          this.snack('Barrio actualizada!')
         } catch (error) {
           this.snack(error.response.data.message, 'error')
         }

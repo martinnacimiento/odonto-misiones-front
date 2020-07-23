@@ -8,14 +8,14 @@
           v-row
             v-col(cols="12" md="6")
               v-text-field(
-                label="barrio"
+                label="Barrio"
                 v-model="district.district"
                 :rules="[rules.required, rules.counter]"
               )
-              v-col(cols="12" md="6")
+            v-col(cols="12" md="6")
               v-select(
-                  label="localidad"
-                  :items="city"
+                  label="Localidad"
+                  :items="cities"
                   item-text="localidad"
                   item-value="id"
                   v-model="district.localidad_id"
@@ -31,11 +31,11 @@
 export default {
   name: 'barrios-nuevo',
   async fetch() {
-    const city = await this.$axios.$get(`apps/localidad/`)
-    this.city = city
+    const cities = await this.$axios.$get(`apps/localidad/`)
+    this.cities = cities
   },
   data: () => ({
-    city: [],
+    cities: [],
     valid: false,
     snackbar: false,
     color: 'green',
@@ -53,10 +53,10 @@ export default {
         this.loading = true
         try {
           await this.$axios.$post(`apps/barrio/`, {
-            barrio: this.district.barrio,
-            localidad_id: this.district.localidad_id,
+            barrio: this.district.district,
+            localidad: this.district.localidad_id,
           })
-          this.snack('barrio creado!')
+          this.snack('Barrio creado!')
           this.$refs.form.reset()
         } catch (error) {
           this.snack(error.response.data.detail, 'error')

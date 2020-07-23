@@ -14,10 +14,20 @@
               )
             v-col(cols="12" md="6")
               v-text-field(
-                label="Sexo"
+                label="Provincia"
                 v-model="province.provincia"
                 :rules="[rules.required, rules.counter]"
                 autofocus
+              )
+            v-col(cols="12" md="6")
+              v-select(
+                label="País"
+                :items="countries"
+                item-text="pais"
+                item-value="id"
+                v-model="province.pais"
+                :rules="[rules.required]" 
+                :loading="$fetchState.pending"
               )
       v-card-actions
         v-spacer
@@ -29,10 +39,13 @@ export default {
   name: 'provincias-id',
   async fetch() {
     const { id } = this.$route.params
-    const province = await this.$axios.$get(`apps/provincias/${id}/`)
+    const province = await this.$axios.$get(`apps/provincia/${id}/`)
+    const countries = await this.$axios.$get(`apps/pais/`)
     this.province = province
+    this.countries = countries
   },
   data: () => ({
+    countries: [],
     province: {},
     valid: false,
     snackbar: false,
@@ -51,6 +64,7 @@ export default {
         try {
           await this.$axios.$put(`apps/provincia/${this.province.id}/`, {
             provincia: this.province.provincia,
+            pais: this.province.pais,
           })
           this.snack('Provincia actualizada!')
         } catch (error) {

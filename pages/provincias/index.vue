@@ -23,7 +23,7 @@
       )
         template( v-slot:top)
           v-toolbar(flat)
-            v-toolbar-title provincias
+            v-toolbar-title Provincias
             v-divider(inset vertical).mx-4
             v-text-field(v-model="search" append-icon="mdi-table-search" label="Buscar" single-line hide-details)
             v-spacer
@@ -43,7 +43,7 @@ export default {
     provinces: [],
     headers: [
       { text: 'ID', value: 'id' },
-      { text: 'provincia', value: 'provincia' },
+      { text: 'Provincia', value: 'provincia' },
       {
         text: 'Acciones',
         align: 'right',

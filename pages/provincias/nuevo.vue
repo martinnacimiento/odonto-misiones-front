@@ -8,7 +8,7 @@
           v-row
             v-col(cols="12" md="6")
               v-text-field(
-                label="provincia"
+                label="Provincia"
                 v-model="province.province"
                 :rules="[rules.required, rules.counter]"
               )

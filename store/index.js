@@ -42,5 +42,6 @@ export const actions = {
   delete_token({ commit }) {
     this.$axios.setToken(false)
     commit('setIsAuth', null)
+    this.$router.push('/')
   },
 }

@@ -5,6 +5,8 @@
       v-card-title Editar cliente
       v-card-text
         v-form(ref="form" v-model="valid" lazy-validation)
+          v-divider(inset)
+          v-subheader(inset) Datos del cliente
           v-row
             v-col(cols="12" md="6")
               v-text-field(
@@ -28,7 +30,7 @@
               v-text-field(
                 label="Teléfono"
                 v-model="customer.telefono"
-                :rules="[rules.required, rules.counter(10)]"
+                :rules="[rules.required, rules.counter(10), rules.number]"
               )
             v-col(cols="12" md="6")
               v-text-field(
@@ -42,8 +44,8 @@
                 v-model="customer.nota"
                 :rules="[rules.required, rules.counter(200)]"
               )
-          v-divider
-          h3 Domicilio
+          v-divider(inset)
+          v-subheader(inset) Datos del domicilio
           v-row
             v-col(cols="12" md="6")
               v-select(
@@ -95,7 +97,7 @@
               v-text-field(
                 label="Numero"
                 v-model="home.nro"
-                :rules="[rules.required, rules.counter(50)]"
+                :rules="[rules.required, rules.counter(50), rules.number]"
               ) 
             v-col(cols="12" md="6")
               v-text-field(
@@ -113,7 +115,7 @@
               v-text-field(
                 label="Piso"
                 v-model="home.piso"
-                :rules="[rules.required, rules.counter(50)]"
+                :rules="[rules.required, rules.counter(50), rules.number]"
               )
       v-card-actions
         v-spacer
@@ -161,6 +163,7 @@ export default {
         /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(
           v
         ) || 'El email no es válido.',
+      number: (v) => /^[0-9]+$/.test(v) || 'Solo números.',
     },
     loading: false,
   }),

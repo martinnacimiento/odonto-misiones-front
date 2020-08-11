@@ -73,10 +73,17 @@ export default {
       this.dialog = false
     },
     async destroy(id) {
-      await this.$axios.$delete(`apps/pais/${id}/`)
-      this.get()
-      this.resetDialog()
-      this.snack('El país ha sido eliminado.')
+      try {
+        await this.$axios.$delete(`apps/pais/${id}/`)
+        this.get()
+        this.resetDialog()
+        this.snack('El país ha sido eliminado.')
+      } catch (error) {
+        this.snack(
+          'No puede eliminar el país porque tiene provincias asociadas, elimine primero las provincias.',
+          'error'
+        )
+      }
     },
     snack(message, color = 'green') {
       this.color = color

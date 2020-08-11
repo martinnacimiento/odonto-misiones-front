@@ -73,10 +73,17 @@ export default {
       this.dialog = false
     },
     async destroy(id) {
-      await this.$axios.$delete(`apps/barrio/${id}/`)
-      this.get()
-      this.resetDialog()
-      this.snack('El barrio ha sido eliminado.')
+      try {
+        await this.$axios.$delete(`apps/barrio/${id}/`)
+        this.get()
+        this.resetDialog()
+        this.snack('El barrio ha sido eliminado.')
+      } catch (error) {
+        this.snack(
+          'No puede eliminar el barrio porque tiene domicilios asociados, modifique o elimine primero los domicilios.',
+          'error'
+        )
+      }
     },
     snack(message, color = 'green') {
       this.color = color

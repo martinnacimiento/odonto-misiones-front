@@ -73,10 +73,17 @@ export default {
       this.dialog = false
     },
     async destroy(id) {
-      await this.$axios.$delete(`apps/localidad/${id}/`)
-      this.get()
-      this.resetDialog()
-      this.snack('La localidad ha sido eliminado.')
+      try {
+        await this.$axios.$delete(`apps/localidad/${id}/`)
+        this.get()
+        this.resetDialog()
+        this.snack('La localidad ha sido eliminado.')
+      } catch (error) {
+        this.snack(
+          'No puede eliminar la localidad porque tiene barrios asociados, elimine primero los barrios.',
+          'error'
+        )
+      }
     },
     snack(message, color = 'green') {
       this.color = color

@@ -77,9 +77,11 @@ export default {
     },
     async destroy(id) {
       await this.$axios.$delete(`apps/clientes/${id}/`)
+      const home = this.customers.find((c) => c.id === id).domicilio
+      await this.$axios.$delete(`apps/domicilio/${home}/`)
       this.get()
       this.resetDialog()
-      this.snack('El país ha sido eliminado.')
+      this.snack('El cliente ha sido eliminado.')
     },
     snack(message, color = 'green') {
       this.color = color

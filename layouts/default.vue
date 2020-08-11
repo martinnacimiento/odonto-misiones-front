@@ -121,12 +121,6 @@ export default {
               to: '/barrios',
               permission: '',
             },
-            {
-              title: 'Domicilios',
-              icon: '',
-              to: '/domicilios',
-              permission: '',
-            },
           ],
         },
         {

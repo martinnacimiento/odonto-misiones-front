@@ -26,7 +26,7 @@
 </template>
 <script>
 export default {
-  name: 'paises-id',
+  name: 'PaisesId',
   async fetch() {
     const { id } = this.$route.params
     const country = await this.$axios.$get(`apps/pais/${id}/`)

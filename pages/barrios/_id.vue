@@ -36,7 +36,7 @@
 </template>
 <script>
 export default {
-  name: 'barrios-id',
+  name: 'BarriosId',
   async fetch() {
     const { id } = this.$route.params
     const district = await this.$axios.$get(`apps/barrio/${id}/`)

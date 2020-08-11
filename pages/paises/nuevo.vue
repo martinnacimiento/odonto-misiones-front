@@ -19,7 +19,7 @@
 </template>
 <script>
 export default {
-  name: 'paises-nuevo',
+  name: 'PaisesNuevo',
   data: () => ({
     valid: false,
     snackbar: false,

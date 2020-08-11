@@ -29,7 +29,7 @@
 </template>
 <script>
 export default {
-  name: 'localidads-nuevo',
+  name: 'LocalidadsNuevo',
   async fetch() {
     const province = await this.$axios.$get(`apps/provincia/`)
     this.provinces = province

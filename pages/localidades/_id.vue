@@ -36,7 +36,7 @@
 </template>
 <script>
 export default {
-  name: 'localidads-id',
+  name: 'LocalidadsId',
   async fetch() {
     const { id } = this.$route.params
     const locality = await this.$axios.$get(`apps/localidad/${id}/`)

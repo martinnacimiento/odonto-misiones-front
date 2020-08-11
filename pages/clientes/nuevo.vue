@@ -174,19 +174,19 @@ export default {
   },
   watch: {
     provinceSelected(id) {
-      if (this.countrySelected) return 'Ok'
+      if (this.countrySelected || !id) return 'Ok'
       const province = this.provinces.find((p) => p.id === id)
       const country = this.countries.find((c) => c.id === province.pais)
       this.countrySelected = country.id
     },
     localitySelected(id) {
-      if (this.provinceSelected) return 'Ok'
+      if (this.provinceSelected || !id) return 'Ok'
       const locality = this.localities.find((l) => l.id === id)
       const province = this.provinces.find((p) => p.id === locality.provincia)
       this.provinceSelected = province.id
     },
     districtSelected(id) {
-      if (this.localitySelected) return 'Ok'
+      if (this.localitySelected || !id) return 'Ok'
       const district = this.districts.find((d) => d.id === id)
       const locality = this.localities.find((l) => l.id === district.localidad)
       this.localitySelected = locality.id
